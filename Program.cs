@@ -187,107 +187,101 @@ namespace SQL_Pract_2
                 }
                 Console.WriteLine();
 
+
+
+
+
+                //    ///9.
+
+                //var products = new List<Product>{
+                //new Product { Name = "Tablet", Price = 299.99M, CategoryId = 1 },
+                //new Product { Name = "E-Reader", Price = 129.99M, CategoryId = 2 },
+                //new Product { Name = "Sneakers", Price = 89.99M, CategoryId = 3 }
+                // };
+
+
+                //object value = connection.BulkInsert(products);
+
+                //    //10
+
+                //    //    var productsToDelete = connection.Query<Product>(
+                //    //"SELECT * FROM Products WHERE Price < 20").ToList();
+
+                //    //    connection.BulkDelete(productsToDelete);
+
+                //    //11  
+
+                //    var produc = connection.Query<Product>("SELECT * FROM Products").ToList();
+                //    produc.ForEach(p => p.Price *= 1.1M); // підвищення ціни на 10%
+                //    connection.BulkUpdate(produc);
+
+
+
+
+
+                //    ////1.ДЗ Підвищит ціну продукту який має найменшу кількість продажів
+                //    var sql = @"UPDATE Products P SET P.Price = P.Price * 1.1 WHERE P.Id = (
+                //                SELECT TOP 1 P.Id 
+                //                FROM Products P 
+                //                JOIN OrderProducts OP ON OP.ProductId = P.Id 
+                //                GROUP BY P.Id 
+                //                ORDER BY SUM(OP.Quantity) )";
+
+                //    var updateprod = connection.Execute(sql);
+                //    if (updateprod > 0) Console.WriteLine("Update Price from min value Quantity in Products");
+
+                //    ///
+                //    /// 2.  1ДЗ  в процедурі
+
+                //string createProcedureSql = @"CREATE PROCEDURE SP_UpPriceProbuctMinQuantity
+                //                            AS
+                //                            BEGIN
+                //                            UPDATE Products SET Price = Price * 1.1 WHERE Id = (
+                //                            SELECT TOP 1 P.Id 
+                //                            FROM Products P 
+                //                            JOIN OrderProducts OP ON OP.ProductId = P.Id 
+                //                            GROUP BY P.Id 
+                //                            ORDER BY SUM(OP.Quantity) ) 
+                //                            END";
+
+                //connection.Execute(createProcedureSql);
+
+                //connection.Execute("SP_UpPriceProbuctMinQuantity", commandType: System.Data.CommandType.StoredProcedure);
+
+                //    /// 3. Тригери на видалення об'єктів таблиць: видалені об'єкти переносяться в таблицю видалених об'єктів
+                //    /// 
+
+                //string create_table = @"CREATE TABLE OrderProductsLogDelete
+                //                    (
+                //                        ProductId INT NOT NULL,
+                //                        Name NVARCHAR(100) NOT NULL,
+                //                        Price MONEY NOT NULL,
+                //                        CategoryId INT NOT NULL,
+                //                        CategoryName NVARCHAR(100) NOT NULL,
+                //                        DateLog DATE DEFAULT GETDATE()
+                //                    )";
+
+                //connection.Execute(create_table);
+
+                //string create_trg = @"CREATE TRIGGER TR_LogDeletedProductInfo
+                //                    ON Products
+                //                    AFTER DELETE
+                //                    AS
+                //                    BEGIN
+                //                    INSERT INTO OrderProductsLogDelete
+                //                    (ProductId, Name, Price, CategoryId, CategoryName)
+                //                    SELECT P.Id, P.Name, P.Price, P.CategoryId, C.Name
+                //                    FROM Deleted P
+                //                    JOIN Categories C ON C.Id = P.CategoryId
+                //                    END";
+
+                //connection.Execute(create_trg);
+
+                //connection.Execute("DELETE FROM Products WHERE LOWER(Name) = LOWER('Sneakers')");
+
+
+
             }
-
-
-            //using (var connection = factory.CreateConnection())
-            //{
-
-
-            //    ///9.
-
-            //    //var products = new List<Product>{
-            //    //new Product { Name = "Tablet", Price = 299.99M, CategoryId = 1 },
-            //    //new Product { Name = "E-Reader", Price = 129.99M, CategoryId = 2 },
-            //    //new Product { Name = "Sneakers", Price = 89.99M, CategoryId = 3 }
-            //    // };
-
-
-            //    //object value = connection.BulkInsert(products);
-
-            //    //10
-
-            //    //    var productsToDelete = connection.Query<Product>(
-            //    //"SELECT * FROM Products WHERE Price < 20").ToList();
-
-            //    //    connection.BulkDelete(productsToDelete);
-
-            //    //11  
-
-            //    var produc = connection.Query<Product>("SELECT * FROM Products").ToList();
-            //    produc.ForEach(p => p.Price *= 1.1M); // підвищення ціни на 10%
-            //    connection.BulkUpdate(produc);
-
-            //    ////1.ДЗ Підвищит ціну продукту який має найменшу кількість продажів
-            //    var sql = @"UPDATE Products P SET P.Price = P.Price * 1.1 WHERE P.Id = (
-            //                SELECT TOP 1 P.Id 
-            //                FROM Products P 
-            //                JOIN OrderProducts OP ON OP.ProductId = P.Id 
-            //                GROUP BY P.Id 
-            //                ORDER BY SUM(OP.Quantity) )";
-
-            //    var updateprod = connection.Execute(sql);
-            //    if (updateprod > 0) Console.WriteLine("Update Price from min value Quantity in Products");
-
-            //    ///
-            //    /// 2.  1ДЗ  в процедурі
-
-            //    string createProcedureSql = @"CREATE PROCEDURE SP_UpPriceProbuctMinQuantity
-            //                                AS
-            //                                BEGIN
-            //                                UPDATE Products SET Price = Price * 1.1 WHERE Id = (
-            //                                SELECT TOP 1 P.Id 
-            //                                FROM Products P 
-            //                                JOIN OrderProducts OP ON OP.ProductId = P.Id 
-            //                                GROUP BY P.Id 
-            //                                ORDER BY SUM(OP.Quantity) ) 
-            //                                END";
-
-            //    using var command = new SqlCommand(createProcedureSql, (SqlConnection)connection);
-            //    command.ExecuteNonQuery();
-
-            //    connection.Execute("SP_UpPriceProbuctMinQuantity", commandType: System.Data.CommandType.StoredProcedure);
-
-            //    /// 3. Тригери на видалення об'єктів таблиць: видалені об'єкти переносяться в таблицю видалених об'єктів
-            //    /// 
-
-            //    string create_table = @"CREATE TABLE OrderProductsLogDelete
-            //                    (
-            //                        ProductId INT NOT NULL,
-            //                        Name NVARCHAR(100) NOT NULL,
-            //                        Price MONEY NOT NULL,
-            //                        CategoryId INT NOT NULL,
-            //                        OrderId INT NOT NULL,
-            //                        OrderDate DATE NOT NULL,
-            //                        CustomerId INT NOT NULL,
-            //                        Quantity INT NOT NULL,
-            //                        DateLog DATE DEFAULT GETDATE()
-            //                    )";
-
-            //    using var command1 = new SqlCommand(create_table, (SqlConnection)connection);
-            //    command1.ExecuteNonQuery();
-
-            //    string create_trg = @"CREATE TRIGGER TR_LogDeletedProductInfo
-            //                    ON Products
-            //                    AFTER DELETE
-            //                    AS
-            //                    BEGIN
-            //                    INSERT INTO OrderProductsLogDelete
-            //                    (ProductId, Name, Price, CategoryId, OrderId, OrderDate, CustomerId, Quantity, DateLog)
-            //                    SELECT P.Id, P.Name, P.Price, P.CategoryId, O.Id, O.OrderDate, O.CustomerId, OP.Quantity
-            //                    FROM Deleted P
-            //                    JOIN OrderProducts OP ON P.Id = OP.ProductId
-            //                    JOIN Orders O ON O.Id = OP.OrderId
-            //                    END";
-
-            //    using var command2 = new SqlCommand(create_trg, (SqlConnection)connection);
-            //    command2.ExecuteNonQuery();
-
-            //    connection.Close();
-
-
-
-            //}
         }
     }
 }
