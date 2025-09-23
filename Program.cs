@@ -64,19 +64,19 @@ namespace SQL_Pract_2
                 //                1.Отримати всі товари з назвами їхніх категорій
                 //•	SELECT з JOIN між Products та Categories.
 
-                //var sql4 = @"SELECT * FROM Products P JOIN Categories C ON P.CategoryId = C.Id";
+                var sql4 = @"SELECT * FROM Products P JOIN Categories C ON P.CategoryId = C.Id";
 
-                //var select2 = connection.Query<Product, Category, Product>(sql4, (product, category) =>
-                //{
-                //    product.Category = category;
-                //    return product;
-                //}, splitOn: "Id"
-                //).ToList();
+                var select2 = connection.Query<Product, Category, Product>(sql4, (product, category) =>
+                {
+                    product.Category = category;
+                    return product;
+                }, splitOn: "Id"
+                ).ToList();
 
-                //foreach (var it in select2)
-                //{
-                //    Console.WriteLine($"Id: {it.Id,-5}Name {it.Name,-20}Price {it.Price,-15}CategoryId: {it.CategoryId,-5} Category {it.Category.Name}");
-                //}
+                foreach (var it in select2)
+                {
+                    Console.WriteLine($"Id: {it.Id,-5}Name {it.Name,-20}Price {it.Price,-15}CategoryId: {it.CategoryId,-5} Category {it.Category.Name}");
+                }
 
                 //                2.Отримати всі категорії та кількість товарів у кожній
                 //•	SELECT з GROUP BY.
